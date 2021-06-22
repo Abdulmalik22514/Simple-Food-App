@@ -1,14 +1,27 @@
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
-export const Buttons = ({ title, onPress, style, lessMarginTop }) => {
+export const Buttons = ({ title, onPress, style, lessMarginTop, loading }) => {
   return (
     <TouchableOpacity
       style={[styles.log, lessMarginTop && styles.lessTop, style]}
       activeOpacity={0.7}
       onPress={onPress}
     >
-      <Text style={styles.login}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator
+          color="white"
+          size="small"
+          style={{ marginTop: 10 }}
+        />
+      ) : (
+        <Text style={styles.login}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
