@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { CustomInput } from "../../components/customInput";
 import { Header } from "../../components/customHeader";
@@ -22,9 +23,9 @@ export default function Signup({ navigation }) {
 
   const Register = () => {
     const data = {
-      username: user,
-      email: email,
-      password: password,
+      // username: user,
+      email,
+      password,
     };
     setLoading(true);
     fetch("https://reqres.in/api/register", {
@@ -35,13 +36,13 @@ export default function Signup({ navigation }) {
       },
     })
       .then((response) => response.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err))
-      .finally(() =>
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000)
-      );
+      .then((res) => {
+        if (res.error) {
+          Alert.alert(res.error);
+        } else Alert.alert("My response", "Registration successful");
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   };
   return (
     <View style={styles.container}>
@@ -54,30 +55,17 @@ export default function Signup({ navigation }) {
       </View>
 
       <View style={{ marginTop: 30 }}>
-        <CustomInput
+        {/* <CustomInput
           label="Username"
           onChange={setUser}
           value={user}
           isActive
-        />
+        /> */}
         <CustomInput value={email} onChange={setEmail} label="Email" />
         <CustomInput value={password} onChange={setPassword} label="Password" />
       </View>
 
-      <Buttons
-        title={
-          loading ? (
-            <ActivityIndicator
-              color="white"
-              size="small"
-              style={{ marginTop: 10 }}
-            />
-          ) : (
-            <Text style={styles.login}>SIGNUP</Text>
-          )
-        }
-        onPress={() => Register()}
-      />
+      <Buttons title="SIGNUP" loading={loading} onPress={() => Register()} />
 
       <View style={styles.new}>
         <Text style={styles.user}>Existing user?</Text>
