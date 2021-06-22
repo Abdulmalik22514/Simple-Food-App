@@ -34,7 +34,7 @@ export default function Order({ navigation }) {
       </View>
       <Buttons
         title="CHECKOUT"
-        onPress={() => navigation.navigate("login")}
+        onPress={() => navigation.navigate("profile")}
         lessMarginTop
       />
     </View>
